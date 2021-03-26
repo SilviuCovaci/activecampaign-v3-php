@@ -12,6 +12,11 @@ use Mediatoolkit\ActiveCampaign\Resource;
 class Contacts extends Resource
 {
 
+    protected function getApiParameters($type, $itemData = null) {
+        $parameters['endpoint'] = 'contacts';
+        return $parameters;                
+    }
+
     /**
      * Create a contact
      * @see https://developers.activecampaign.com/reference#create-contact
@@ -177,31 +182,6 @@ class Contacts extends Resource
         $req = $this->client
             ->getClient()
             ->delete('/api/3/contactTags/' . $contact_tag_id);
-
-        return $req->getBody()->getContents();
-    }
-
-    /**
-     * List all contacts
-     * @see https://developers.activecampaign.com/reference#list-all-contacts
-     *
-     * @param array $query_params
-     * @param int $limit
-     * @param int $offset
-     * @return string
-     */
-    public function listAll(array $query_params = [], int $limit = 20, int $offset = 0)
-    {
-        $query_params = array_merge($query_params, [
-            'limit' => $limit,
-            'offset' => $offset
-        ]);
-
-        $req = $this->client
-            ->getClient()
-            ->get('/api/3/contacts', [
-                'query' => $query_params
-            ]);
 
         return $req->getBody()->getContents();
     }
