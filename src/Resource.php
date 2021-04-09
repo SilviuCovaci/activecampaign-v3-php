@@ -16,6 +16,8 @@ class Resource
      */
     protected $client;
 
+    protected $endPoints = null;
+
     /**
      * Resource constructor.
      * @param $client Client
@@ -58,15 +60,15 @@ class Resource
      * @param int $offset
      * @return string
      */
-    public function listAll(array $query_params = [], int $limit = 20, int $offset = 0)
+    public function listAll(array $queryParams = [], int $limit = 20, int $offset = 0)
     {
-        $query_params = array_merge($query_params, [
-            'limit' => $limit,
-            'offset' => $offset
-        ]);        
+        if ($limit > 0) {
+            $queryParams['limit']  = $limit;
+        }
+        $queryParams['offset']  = $offset;
 
         $parameters = $this->getApiParameters('listAll');
-        return $this->api('GET', $parameters['endpoint'], $query_params);             
+        return $this->api('GET', $parameters['endpoint'], $queryParams);             
     }
 
     
