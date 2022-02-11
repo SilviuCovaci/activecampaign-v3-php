@@ -15,6 +15,11 @@ class Webhooks extends Resource
         if ($itemData && isset($itemData['itemData'])) {
             $parameters['postdata'] = $itemData['itemData'];
         }
+        if ($type == 'update' && isset($itemData['id'])) {
+            $id = $itemData['id'];
+            $parameters['id'] = $id;
+            $parameters['endpoint'] = 'webhooks/' . $id;
+        }
         return $parameters;
     }
 
